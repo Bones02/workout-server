@@ -5,6 +5,7 @@ const WorkoutService = require( './workout-service' )
 const workoutRouter = express.Router()
 const jsonParser = express.json()
 
+
 // pull each piece of logic out of each route, all after .get, and put that all into a route file with a function for each route.
 workoutRouter
 
@@ -55,7 +56,7 @@ workoutRouter
 
   .route( '/:workoutId' )
   .all( ( req, res, next ) => {
-    WorkoutService.getWorkoutById(
+    WorkoutService.getWorkoutsById(
       req.app.get( 'db' ),
       req.params.workoutId
     )

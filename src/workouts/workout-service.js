@@ -21,7 +21,7 @@ const WorkoutService = {
         .first()
     },
     deleteWorkout( knex, id ) {
-      return knex( 'workouts' )
+      return knex('workouts')
         .where( { id } )
         .delete()
     },
