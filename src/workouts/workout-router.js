@@ -5,8 +5,6 @@ const WorkoutService = require( './workout-service' )
 const workoutRouter = express.Router()
 const jsonParser = express.json()
 
-
-// pull each piece of logic out of each route, all after .get, and put that all into a route file with a function for each route.
 workoutRouter
 
   .route( '/' )
@@ -63,10 +61,10 @@ workoutRouter
       .then( ( workout ) => {
         if ( !workout ) {
           return res.status( 404 ).json( {
-            error : { message : 'Note not found.' }
+            error : { message : 'Workout not found.' }
           } )
         }
-        res.workout = workout // save note for next middlewear, and pass on to next
+        res.workout = workout 
         next()
       } )
       .catch( next )
@@ -90,8 +88,8 @@ workoutRouter
       ...workoutToUpdate, 
       modified
     }
-    // ISSUE: You can't reassociate a note to a new folder, probably because of the constraints of the field.
-    WorkoutService.updateNote(
+    
+    WorkoutService.updateWorkout(
       req.app.get( 'db' ),
       res.workout.id,
       newWorkoutFields

@@ -20,12 +20,11 @@ typeRouter
   } )
   .post( jsonParser, ( req, res, next ) => {
     const { name : newTypeName } = req.body
-    // build a validator / sanitizer middlewear for this.
     TypeService.insertType(
       req.app.get( 'db' ),
       newTypeName
     )
-      .then( ( folder ) => {
+      .then( ( type ) => {
         res
           .status( 201 )
           .location( path.posix.join( req.originalUrl, `/${type.id}` ) )
@@ -40,7 +39,7 @@ typeRouter
   .all( ( req, res, next ) => {
     TypeService.getTypeById(
       req.app.get( 'db' ),
-      req.params.folderId
+      req.params.typeId
     )
       .then( ( type ) => {
         if ( !type ) {
@@ -49,13 +48,13 @@ typeRouter
             error : { message : 'Type not found.' }
           } )
         }
-        res.type = type // save folder for next middlewear, and pass on to next
+        res.type = type // save type for next middlewear, and pass on to next
         next()
       } )
       .catch( next )
   } )
   .get( ( req, res, next ) => {
-    // res.json( res.folder )
+    // res.json( res.type )
 
     TypeService.getWorkoutsForType(
       req.app.get( 'db' ), 

@@ -20,12 +20,12 @@ const TypeService = {
         .where( { id } )
         .first()
     },
-    getWorkoutsForTypes( knex, typeid ) {
-      const notes = knex
+    getWorkoutsForTypes( knex, typeid ) {s
+      const workouts = knex
         .select( '*' )
         .from( 'workouts' )
         .where( { typeid } )
-      return notes
+      return workouts
     },
     deleteType( knex, id ) {
       return knex( 'types' )
