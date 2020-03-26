@@ -8,7 +8,6 @@ const jsonParser = express.json()
 workoutRouter
 
   .route( '/' )
-
   .get( ( req, res, next ) => {
     const knexInstance = req.app.get( 'db' )
     WorkoutService.getAllWorkouts( knexInstance )
@@ -19,15 +18,14 @@ workoutRouter
       } )
       .catch( next )
   } )
-
   .post( jsonParser, ( req, res, next ) => {
+    console.log(typeid)
     const { name, typeid, description, calories, minutes } = req.body
     if ( !( name && typeid ) ) {
       return res.status( 400 ).json( {
         error : { message : `${name}, ${typeid}` }
       } )
     }
-
     const newWorkout = {
       name, 
       typeid,
@@ -35,7 +33,6 @@ workoutRouter
       calories,
       minutes
     }
-    
     WorkoutService.insertWorkout(
       req.app.get( 'db' ),
       newWorkout
@@ -48,7 +45,6 @@ workoutRouter
       } )
       .catch( next )
   } )
-
 
 workoutRouter
 

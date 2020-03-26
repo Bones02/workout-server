@@ -6,7 +6,6 @@ const logger = require( '../logger' )
 const typeRouter = express.Router()
 const jsonParser = express.json()
 
-// pull each piece of logic out of each route, all after .get, and put that all into a route file with a function for each route.
 typeRouter
   .route( '/' )
   .get( ( req, res, next ) => {
@@ -34,7 +33,6 @@ typeRouter
   } )
 
 typeRouter
-
   .route( '/:typeId' )
   .all( ( req, res, next ) => {
     TypeService.getTypeById(
@@ -48,14 +46,13 @@ typeRouter
             error : { message : 'Type not found.' }
           } )
         }
-        res.type = type // save type for next middlewear, and pass on to next
+        res.type = type 
         next()
       } )
       .catch( next )
   } )
   .get( ( req, res, next ) => {
     // res.json( res.type )
-
     TypeService.getWorkoutsForType(
       req.app.get( 'db' ), 
       res.type.id
